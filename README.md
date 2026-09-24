@@ -6,6 +6,18 @@ Say goodbye to intrusive trackers, banners, and video overlays with zero perform
 
 ---
 
+> ### 🚀 Quick Download & Install
+> 
+> 1. **Download:** 👉 **[📦 Download `adios.zip` (Click Here)](https://github.com/rvannos/Ad-ios/raw/main/dist/adios.zip)**
+> 2. **Extract:** Unzip `adios.zip` anywhere on your computer (e.g. `Downloads` or `Documents`).
+> 3. **Load in Chrome:**
+>    - Go to `chrome://extensions`
+>    - Turn **ON** **Developer mode** (toggle in the top-right corner)
+>    - Click **Load unpacked** (button in the top-left corner)
+>    - Select the unzipped folder. **Done!** 🎉
+
+---
+
 ## Extension Identity
 
 | Property | Value |
@@ -14,7 +26,7 @@ Say goodbye to intrusive trackers, banners, and video overlays with zero perform
 | **Manifest Version** | `3` (Strict MV3 compliant) |
 | **Public Key Algorithm** | RSA 2048-bit (PKCS#8 SubjectPublicKeyInfo DER) |
 | **Engines** | Modular DeclarativeNetRequest + MutationObserver |
-| **Pre-built Packages** | `dist/adios.crx` (Signed CRX3) & `dist/adios.zip` (Portable bundle) |
+| **Download Links** | **[📦 adios.zip](https://github.com/rvannos/Ad-ios/raw/main/dist/adios.zip)** (Recommended) • **[🛡️ adios.crx](https://github.com/rvannos/Ad-ios/raw/main/dist/adios.crx)** |
 
 ---
 
@@ -37,14 +49,14 @@ You can turn any category ON or OFF at any time simply by clicking the extension
 ## Quick-Start: Install & Test in 2 Minutes
 
 ### 1. Load the Extension
-1. Open **Google Chrome** and navigate to:
+1. Download and extract **[adios.zip](https://github.com/rvannos/Ad-ios/raw/main/dist/adios.zip)** (or use this cloned repository folder).
+2. Open **Google Chrome** and navigate to:
    ```text
    chrome://extensions
    ```
-2. Turn **ON** **Developer mode** (top-right corner).
-3. If you have an old disabled version of the extension listed, click **Remove**.
-4. Click **Load unpacked** (top-left corner).
-5. Select this project folder (`Adblock-Mac` or unzipped `adios.zip`).
+3. Turn **ON** **Developer mode** (top-right corner).
+4. If you have an old disabled version of the extension listed, click **Remove**.
+5. Click **Load unpacked** (top-left corner) and select the extracted folder.
 6. You will see **Ad-ios!** active with ID:
    ```text
    eoidjjcijbeojdeoafpjadolfmkidcmc
