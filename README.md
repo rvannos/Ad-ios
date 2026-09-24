@@ -87,17 +87,31 @@ Visit [https://adblock-tester.com](https://adblock-tester.com).
 
 ---
 
-## Phase 2 (Optional): Make Permanent
+## Optional: Make Permanent (What the Install Scripts Do)
 
-### macOS:
+> **Do you need to do this? No, it's 100% optional!**  
+> Ad-ios is already fully active and blocking ads after loading it unpacked.
+
+### What Problem Do These Scripts Solve?
+1. **Stops Startup Nag Screens**: Prevents Chrome from showing the annoying *"Disable developer mode extensions"* popup dialog every time the browser starts.
+2. **Prevents Auto-Disable on Updates**: When Google Chrome updates itself in the background, it often turns off unpacked developer extensions. These scripts instruct Chrome to keep Ad-ios permanently enabled across updates.
+3. **Pins the Shield Icon**: Automatically pins the Ad-ios shield icon to your browser toolbar (`toolbar_pin: "force_pinned"`).
+4. **Authorizes the Extension ID**: Registers Ad-ios (`eoidjjcijbeojdeoafpjadolfmkidcmc`) into Chrome's Enterprise Policy (`installation_mode: "allowed"`), telling Chrome it is explicitly authorized to run locally.
+
+---
+
+### How to Run:
+
+#### macOS:
+Open **Terminal** and run:
 ```bash
 cd ~/Adblock-Mac
 chmod +x install-mac-policy.sh uninstall-mac-policy.sh
 sudo ./install-mac-policy.sh
 ```
 
-### Windows:
-Open PowerShell as **Administrator**:
+#### Windows:
+Open **PowerShell as Administrator** and run:
 ```powershell
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 cd C:\Adblock-Mac
