@@ -18,26 +18,6 @@ Say goodbye to intrusive trackers, banners, and video overlays with zero perform
 
 ---
 
-## ⚠️ Important: Why Chrome Grays Out the Enable Button
-
-Modern Google Chrome protects users by blocking extensions that were installed outside the Chrome Web Store (e.g. by dragging a `.crx` file). When Chrome detects an off-store `.crx`, it automatically disables it with:
-> *"Extensions disabled... The extensions that Chrome turned off didn't come from the Chrome Web Store"*
-
-### How to Run Without Being Blocked:
-
-1. **The Recommended Way: Use "Load Unpacked" (100% Free & Works Immediately)**:
-   - Extract `dist/adios.zip` (or use this repository folder).
-   - In Chrome, open `chrome://extensions` and turn **ON** **Developer mode** in the top-right.
-   - Click **Load unpacked** (top-left) and select the folder.
-   - Chrome **never** grays out unpacked developer extensions.
-
-2. **To Make It Permanent (Suppress Startup Warnings & Updates Disabling It)**:
-   - Run the included policy script for your operating system:
-     - **macOS**: `sudo ./install-mac-policy.sh`
-     - **Windows**: Right-click PowerShell -> *Run as Administrator* -> `.\install-windows-policy.ps1`
-   - These scripts register the extension ID with `installation_mode = "allowed"` so Chrome authorizes it without disabling it.
-
----
 
 ## Category Toggles (Customize What Gets Blocked)
 
@@ -76,7 +56,7 @@ You can turn any category ON or OFF at any time simply by clicking the extension
 ## How to Test Ad-ios
 
 ### Test 1: Live AdBlock Tester
-Visit [https://adblock-tester.com](https://adblock-tester.com) or [https://d3ward.github.io/toolz/adblock.html](https://d3ward.github.io/toolz/adblock.html).
+Visit [https://adblock-tester.com](https://adblock-tester.com).
 - Run the test.
 - Since **Ad Images & Banners** is set to allow images by default, standard images will pass.
 - If you want to block banner images as well, open the Ad-ios popup and toggle **"Ad Images & Banners"** to **ON**, then refresh!
