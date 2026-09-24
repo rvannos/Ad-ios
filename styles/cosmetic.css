@@ -58,6 +58,22 @@ ins.adsbygoogle,
 .video-ad-companion-banner,
 .jw-ad-container,
 .vjs-ad-playing,
+.fluid_ad_container,
+.fluid_ad_banner,
+.fluid_video_wrapper .ad_container,
+.vast-ad-container,
+
+/* In-Page Push Ads and Floating Notification Banners */
+.inpage-push,
+.in-page-push,
+.ipp-container,
+.bazinga,
+[class*="bazinga"],
+[id*="bazinga"],
+[class*="inpage-push"],
+[id*="inpage-push"],
+div[id*="push-notification"],
+div[class*="push-notification"],
 
 /* Flash, Object, and Embed Banner Placeholders */
 object[data*="banner"],

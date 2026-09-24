@@ -50,6 +50,34 @@
       set: () => {},
       configurable: true
     });
+
+    // Defuse FluidPlayer VAST pre-roll video ads
+    Object.defineProperty(window, 'customAdList', {
+      get: () => [],
+      set: () => {},
+      configurable: true
+    });
+
+    // Protect against clickjacking and popunder traps
+    const originalOpen = window.open;
+    window.open = function (url, target, features) {
+      if (typeof url === 'string') {
+        const u = url.toLowerCase();
+        if (
+          u.includes('12ezo5v60') ||
+          u.includes('ybs2ffs7v') ||
+          u.includes('propeller') ||
+          u.includes('monetag') ||
+          u.includes('adsterra') ||
+          u.includes('clickadu') ||
+          u.includes('bazinga')
+        ) {
+          console.warn('[Ad-ios] Prevented background popunder to:', url);
+          return null;
+        }
+      }
+      return originalOpen.apply(this, arguments);
+    };
   } catch (e) {
     // Continue
   }
