@@ -16,3 +16,7 @@ _metadata/
 # Editor & IDE files
 .vscode/
 .idea/
+
+# Cryptographic Private Keys
+*.pem
+*.key
