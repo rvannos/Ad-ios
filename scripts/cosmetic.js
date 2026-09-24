@@ -23,7 +23,7 @@
     startCosmeticFiltering(categories);
   });
 
-  // Early Scriptlet Defuser & Stubbing (Prevents anti-adblock breakages)
+  // Early Scriptlet Defuser & Stubbing (Prevents anti-adblock and interstitial popups)
   try {
     if (!window.adsbygoogle) {
       const mockAds = [];
@@ -35,6 +35,21 @@
         configurable: true
       });
     }
+
+    // Defuse interstitial-ads WordPress plugin
+    Object.defineProperty(window, 'interAds', {
+      get: () => null,
+      set: () => {},
+      configurable: true
+    });
+    window.interads_close = function () {};
+
+    // Defuse AdBlock Notify / Themeisle anti-adblock modal
+    Object.defineProperty(window, 'anOptions', {
+      get: () => ({ anOptionChoice: '0', anOptionStats: '0' }),
+      set: () => {},
+      configurable: true
+    });
   } catch (e) {
     // Continue
   }
@@ -58,7 +73,22 @@
       '[id^="outbrain_"]',
       '.trc_rbox_div',
       '.ytp-ad-overlay-container',
-      '.video-ads.ytp-ad-module'
+      '.video-ads.ytp-ad-module',
+      '#interads',
+      '#interads-bar',
+      '#interads-cnt',
+      '.interads',
+      '.interads-close',
+      '.interstitial-ad',
+      '[id*="interads"]',
+      '[class*="interads"]',
+      '.rIdHlTQAtJaQ',
+      '.rIdHlTQAtJaQ-default',
+      '[class*="rIdHlTQAtJaQ"]',
+      '.adblock-notice',
+      '.adblock-warning',
+      '.adblock-detected',
+      '.an-sponsored'
     ];
 
     // Only collapse banner image containers if image blocking is explicitly enabled
@@ -81,6 +111,11 @@
         el.style.setProperty('padding', '0px', 'important');
         el.style.setProperty('overflow', 'hidden', 'important');
         el.style.setProperty('pointer-events', 'none', 'important');
+
+        if (el.id?.includes('interads') || (typeof el.className === 'string' && el.className.includes('rIdHlTQAtJaQ'))) {
+          document.body?.style.setProperty('overflow', 'auto', 'important');
+          document.documentElement?.style.setProperty('overflow', 'auto', 'important');
+        }
 
         // Check if parent wrapper is now empty
         const parent = el.parentElement;
