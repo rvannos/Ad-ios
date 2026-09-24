@@ -1,0 +1,182 @@
+[
+  {
+    "id": 3000,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||sentry-cdn.com^",
+      "resourceTypes": [
+        "sub_frame",
+        "script",
+        "xmlhttprequest",
+        "image",
+        "media",
+        "ping",
+        "websocket",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 3001,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||browser.sentry-cdn.com^",
+      "resourceTypes": [
+        "sub_frame",
+        "script",
+        "xmlhttprequest",
+        "image",
+        "media",
+        "ping",
+        "websocket",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 3002,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||js.sentry-cdn.com^",
+      "resourceTypes": [
+        "sub_frame",
+        "script",
+        "xmlhttprequest",
+        "image",
+        "media",
+        "ping",
+        "websocket",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 3003,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||sentry.io^",
+      "resourceTypes": [
+        "sub_frame",
+        "script",
+        "xmlhttprequest",
+        "image",
+        "media",
+        "ping",
+        "websocket",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 3004,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||d2wy8f7a9ursnm.cloudfront.net^",
+      "resourceTypes": [
+        "sub_frame",
+        "script",
+        "xmlhttprequest",
+        "image",
+        "media",
+        "ping",
+        "websocket",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 3005,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||bugsnag.com^",
+      "resourceTypes": [
+        "sub_frame",
+        "script",
+        "xmlhttprequest",
+        "image",
+        "media",
+        "ping",
+        "websocket",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 3006,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||bam.nr-data.net^",
+      "resourceTypes": [
+        "sub_frame",
+        "script",
+        "xmlhttprequest",
+        "image",
+        "media",
+        "ping",
+        "websocket",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 3007,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||js-agent.newrelic.com^",
+      "resourceTypes": [
+        "sub_frame",
+        "script",
+        "xmlhttprequest",
+        "image",
+        "media",
+        "ping",
+        "websocket",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 3008,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||static.cloudflareinsights.com/beacon*^",
+      "resourceTypes": [
+        "sub_frame",
+        "script",
+        "xmlhttprequest",
+        "image",
+        "media",
+        "ping",
+        "websocket",
+        "other"
+      ]
+    }
+  }
+]

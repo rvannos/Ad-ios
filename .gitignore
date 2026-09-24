@@ -1,0 +1,18 @@
+# OS metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Python bytecode & cache
+__pycache__/
+*.pyc
+
+# Temporary staging dirs
+dist/extension_stage/
+dist_extension/
+_metadata/
+*.tmp
+
+# Editor & IDE files
+.vscode/
+.idea/

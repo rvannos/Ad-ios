@@ -1,0 +1,105 @@
+/*
+ * AdShield Mac - High-Specificity Cosmetic Hiding Stylesheet
+ * Injected at document_start to eliminate layout flash and collapse ad containers immediately.
+ */
+
+/* Universal hiding rule for ad containers, banners, and sponsored widgets */
+ins.adsbygoogle,
+[id^="google_ads_iframe"],
+[id^="div-gpt-ad"],
+[id^="aswift_"],
+[id*="GoogleActiveViewElement"],
+[data-ad-unit],
+[data-ad-client],
+[data-ad-slot],
+[data-ad-format],
+[data-adzone],
+[data-google-query-id],
+[data-ad-name],
+[data-native-ad],
+.ad-container,
+.ad-wrapper,
+.ad-slot,
+.ad-banner,
+.ad-placeholder,
+.ad_unit,
+.ad_wrapper,
+.ad_container,
+.advertisement,
+.advert-box,
+.sponsored-card,
+.sponsored-post,
+.sponsored-content,
+.promoted-item,
+.promoted-tweet,
+.native-ad-item,
+[aria-label="advertisement" i],
+[aria-label="sponsored" i],
+[aria-label="ads" i],
+[data-testid="ad-container"],
+
+/* Content Recommendation Networks (Taboola / Outbrain / Revcontent) */
+[id^="taboola-"],
+[class*="tbl-feed-container"],
+.trc_rbox_div,
+.trc_related_container,
+[id^="outbrain_"],
+.ob-widget,
+.ob-smartfeed-wrapper,
+.ob-cards,
+.rc-widget,
+
+/* Video Ad Overlays and Companion Banners */
+.ytp-ad-overlay-container,
+.ytp-ad-message-container,
+.ytp-ad-overlay-slot,
+.ytp-ad-action-interstitial,
+.video-ads.ytp-ad-module,
+.video-ad-companion-banner,
+.jw-ad-container,
+.vjs-ad-playing,
+
+/* Flash, Object, and Embed Banner Placeholders */
+object[data*="banner"],
+embed[src*="banner"],
+object[data*="advertising"],
+embed[src*="advertising"],
+object[type*="shockwave-flash"],
+embed[type*="shockwave-flash"],
+img[src*="advertising"],
+img[src*="ads_banner"],
+img[src*="advmaker"],
+
+/* Common sticky floating bottom/sidebar anchor ads */
+.sticky-ad-bar,
+.floating-ad-container,
+.bottom-anchor-ad,
+.ad-anchor-unit {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  max-height: 0 !important;
+  width: 0 !important;
+  min-width: 0 !important;
+  max-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  outline: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  left: -9999px !important;
+  top: -9999px !important;
+  clip: rect(0, 0, 0, 0) !important;
+}
+
+/* Ensure collapsed parent containers do not leave blank gap spacing */
+.has-ad-slot:empty,
+.ad-parent:empty {
+  display: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}

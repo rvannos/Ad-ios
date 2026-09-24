@@ -1,0 +1,73 @@
+{
+  "manifest_version": 3,
+  "name": "Ad-ios - Fast Ad & Tracker Blocker",
+  "version": "1.1.0",
+  "description": "Say goodbye to ads, trackers, and telemetry with native Manifest V3 DeclarativeNetRequest.",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAv87wjI0ggTaGz2FajbVREiwZekFqkzF12d+qB6lKNtlJe4rS5xrzayKE8GM1uv3pmuBkSPY+Pyt65VUG72anu6jnvoVVaS/D+AVY/XysfdoSL3+mrmF8SDvV/L8idPYZF2NETCCLFQeUXuo0pvaAQEYzUVGW2/zZ7klEKWU9QHQMB9A5RHyUfSAVfYhbzjlZ9Jtm6alIle9h0iaX31rjEybtGIe9EBq2tK+LrEYfNDQB0bLNkWAMdJ5YxX/NJ9Nl+P8g11kaHpsAu/pqU9GMb6/cczx9maSg19X3xaNCJeM5u7kNdYG06YcUCO1AwcLtAVsFSaKjdcfVn9kQcdSWcQIDAQAB",
+  "permissions": [
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_ads",
+        "enabled": true,
+        "path": "rules/ruleset_ads.json"
+      },
+      {
+        "id": "ruleset_analytics",
+        "enabled": true,
+        "path": "rules/ruleset_analytics.json"
+      },
+      {
+        "id": "ruleset_images",
+        "enabled": false,
+        "path": "rules/ruleset_images.json"
+      },
+      {
+        "id": "ruleset_monitoring",
+        "enabled": true,
+        "path": "rules/ruleset_monitoring.json"
+      }
+    ]
+  },
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "scripts/cosmetic.js"
+      ],
+      "css": [
+        "styles/cosmetic.css"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true
+    }
+  ],
+  "action": {
+    "default_title": "Ad-ios Blocker",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

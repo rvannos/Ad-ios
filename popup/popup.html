@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ad-ios!</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo-group">
+        <img src="../icons/icon48.png" alt="Ad-ios Logo" class="logo">
+        <div>
+          <h1 class="title">Ad-ios!</h1>
+          <span class="subtitle">Adios to ads & trackers 👋</span>
+        </div>
+      </div>
+      <label class="switch" title="Toggle All Protection">
+        <input type="checkbox" id="globalToggle" checked>
+        <span class="slider"></span>
+      </label>
+    </header>
+
+    <!-- Stats Card -->
+    <div class="stats-card">
+      <div class="stats-number" id="blockedCount">0</div>
+      <div class="stats-label">Trackers & Ads Blocked</div>
+      <button class="btn-text" id="resetStatsBtn">Reset counter</button>
+    </div>
+
+    <!-- Active Site Info -->
+    <div class="site-card">
+      <div class="site-info">
+        <span class="site-label">Site:</span>
+        <span class="site-domain" id="currentDomain">Checking...</span>
+      </div>
+      <button class="btn-secondary" id="whitelistBtn">Whitelist This Site</button>
+    </div>
+
+    <!-- Category Toggles -->
+    <div class="categories-section">
+      <div class="section-title">Block Categories</div>
+      
+      <div class="category-item">
+        <div class="cat-info">
+          <span class="cat-name">Ads & Popups</span>
+          <span class="cat-desc">DoubleClick, Criteo, Taboola, Popups</span>
+        </div>
+        <label class="mini-switch">
+          <input type="checkbox" id="catAds" checked>
+          <span class="mini-slider"></span>
+        </label>
+      </div>
+
+      <div class="category-item">
+        <div class="cat-info">
+          <span class="cat-name">Analytics & Metrics</span>
+          <span class="cat-desc">Google Analytics, Hotjar, Metrica</span>
+        </div>
+        <label class="mini-switch">
+          <input type="checkbox" id="catAnalytics" checked>
+          <span class="mini-slider"></span>
+        </label>
+      </div>
+
+      <div class="category-item">
+        <div class="cat-info">
+          <span class="cat-name">Ad Images & Banners</span>
+          <span class="cat-desc">AdvMaker, static banner images, GIFs</span>
+        </div>
+        <label class="mini-switch">
+          <input type="checkbox" id="catImages">
+          <span class="mini-slider"></span>
+        </label>
+      </div>
+
+      <div class="category-item">
+        <div class="cat-info">
+          <span class="cat-name">Error Monitoring</span>
+          <span class="cat-desc">Sentry, Bugsnag, New Relic</span>
+        </div>
+        <label class="mini-switch">
+          <input type="checkbox" id="catMonitoring" checked>
+          <span class="mini-slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Custom DNR Rules Accordion -->
+    <div class="custom-rules-section">
+      <div class="section-title">Custom Domain Filter</div>
+      <div class="rule-input-group">
+        <input type="text" id="customRuleInput" placeholder="e.g. annoying-domain.com" />
+        <button class="btn-primary" id="addRuleBtn">Add</button>
+      </div>
+      <div class="rule-list" id="customRuleList"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-id">ID: <code>eoidjjcijbeojdeoafpjadolfmkidcmc</code></div>
+    </footer>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
