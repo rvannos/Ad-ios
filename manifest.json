@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Ad-ios - Fast Ad & Tracker Blocker",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "description": "Say goodbye to ads, trackers, and telemetry with native Manifest V3 DeclarativeNetRequest.",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAv87wjI0ggTaGz2FajbVREiwZekFqkzF12d+qB6lKNtlJe4rS5xrzayKE8GM1uv3pmuBkSPY+Pyt65VUG72anu6jnvoVVaS/D+AVY/XysfdoSL3+mrmF8SDvV/L8idPYZF2NETCCLFQeUXuo0pvaAQEYzUVGW2/zZ7klEKWU9QHQMB9A5RHyUfSAVfYhbzjlZ9Jtm6alIle9h0iaX31rjEybtGIe9EBq2tK+LrEYfNDQB0bLNkWAMdJ5YxX/NJ9Nl+P8g11kaHpsAu/pqU9GMb6/cczx9maSg19X3xaNCJeM5u7kNdYG06YcUCO1AwcLtAVsFSaKjdcfVn9kQcdSWcQIDAQAB",
   "permissions": [
