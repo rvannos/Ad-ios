@@ -1,8 +1,13 @@
-# Ad-ios! (Manifest V3 Fast Ad & Tracker Blocker)
+<p align="center">
+  <img src="assets/logo.png" width="160" alt="Ad-ios Logo" style="border-radius: 28px;">
+</p>
 
-Ad-ios is a high-performance, native Manifest V3 ad, tracking, and telemetry blocker for Google Chrome on **macOS** and **Windows**.
+<h1 align="center">Ad-ios!</h1>
+<p align="center"><b>Native Manifest V3 Fast Ad & Tracker Blocker for macOS and Windows</b></p>
 
-Say goodbye to intrusive trackers, banners, and video overlays with zero performance penalty. Ad-ios runs natively via Chrome's **DeclarativeNetRequest (DNR)** engine, features non-blocking **cosmetic DOM cleanup**, and offers **modular category toggles** so you can decide what gets blocked and what stays.
+<p align="center">
+  Say goodbye to intrusive trackers, banners, and video overlays with zero performance penalty. Ad-ios runs natively via Chrome's <b>DeclarativeNetRequest (DNR)</b> engine, features non-blocking <b>cosmetic DOM cleanup</b>, and offers <b>modular category toggles</b> so you decide what gets blocked and what stays.
+</p>
 
 ---
 
