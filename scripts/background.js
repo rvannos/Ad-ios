@@ -168,35 +168,27 @@ async function syncRulesetsAndDynamicRules() {
   }
 }
 
-// Update Action badge counter
+// Update Action badge (only indicate OFF if paused; no numbers on the toolbar icon)
 async function updateBadge() {
-  const { [STORAGE_KEYS.GLOBAL_ENABLED]: isEnabled, [STORAGE_KEYS.BLOCKED_COUNT]: count } =
-    await chrome.storage.local.get([STORAGE_KEYS.GLOBAL_ENABLED, STORAGE_KEYS.BLOCKED_COUNT]);
+  const { [STORAGE_KEYS.GLOBAL_ENABLED]: isEnabled } =
+    await chrome.storage.local.get(STORAGE_KEYS.GLOBAL_ENABLED);
 
   if (isEnabled === false) {
     chrome.action.setBadgeText({ text: 'OFF' });
     chrome.action.setBadgeBackgroundColor({ color: '#8E8E93' });
-    return;
-  }
-
-  if (count > 0) {
-    const displayCount = count > 999 ? `${(count / 1000).toFixed(1)}k` : `${count}`;
-    chrome.action.setBadgeText({ text: displayCount });
-    chrome.action.setBadgeBackgroundColor({ color: '#E03131' }); // Vibrant red badge
   } else {
-    chrome.action.setBadgeText({ text: 'ON' });
-    chrome.action.setBadgeBackgroundColor({ color: '#2F9E44' });
+    // Keep toolbar icon clean; block count only shows inside the popup when clicked
+    chrome.action.setBadgeText({ text: '' });
   }
 }
 
-// Debug API for tracking blocked counts
+// Track blocked requests in storage (viewable in popup when clicked)
 if (chrome.declarativeNetRequest.onRuleMatchedDebug) {
   chrome.declarativeNetRequest.onRuleMatchedDebug.addListener(async () => {
     try {
       const data = await chrome.storage.local.get(STORAGE_KEYS.BLOCKED_COUNT);
       const current = (data[STORAGE_KEYS.BLOCKED_COUNT] || 0) + 1;
       await chrome.storage.local.set({ [STORAGE_KEYS.BLOCKED_COUNT]: current });
-      await updateBadge();
     } catch (e) {
       // Ignored
     }
