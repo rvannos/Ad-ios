@@ -38,6 +38,29 @@ def build():
 
     print(f"[+] Created ZIP bundle : {zip_path} ({os.path.getsize(zip_path)} bytes)")
 
+    # 1b. Build adios-webstore.zip (optimized for Chrome Web Store, without 'key' field)
+    import json
+    cws_zip_path = os.path.join(dist, 'adios-webstore.zip')
+    with open(os.path.join(root, 'manifest.json'), 'r', encoding='utf-8') as mf:
+        cws_manifest = json.load(mf)
+    cws_manifest.pop('key', None) # Chrome Web Store forbids 'key' field for new submissions
+    cws_manifest_str = json.dumps(cws_manifest, indent=2)
+
+    with zipfile.ZipFile(cws_zip_path, 'w', zipfile.ZIP_DEFLATED) as zf:
+        zf.writestr('manifest.json', cws_manifest_str)
+        for item in ['rules', 'scripts', 'styles', 'popup', 'icons']:
+            item_path = os.path.join(root, item)
+            if os.path.isdir(item_path):
+                for dirpath, _, filenames in os.walk(item_path):
+                    for fn in filenames:
+                        fp = os.path.join(dirpath, fn)
+                        rel = os.path.relpath(fp, root)
+                        zf.write(fp, rel)
+            elif os.path.isfile(item_path):
+                zf.write(item_path, item)
+
+    print(f"[+] Created WebStore ZIP : {cws_zip_path} ({os.path.getsize(cws_zip_path)} bytes)")
+
     # 2. Build adshield.crx using Chrome CLI
     stage_dir = os.path.join(dist, 'extension_stage')
     shutil.rmtree(stage_dir, ignore_errors=True)
