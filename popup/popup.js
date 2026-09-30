@@ -4,7 +4,8 @@
 
 document.addEventListener('DOMContentLoaded', async () => {
   const globalToggle = document.getElementById('globalToggle');
-  const blockedCountEl = document.getElementById('blockedCount');
+  const pageBlockedCountEl = document.getElementById('pageBlockedCount');
+  const totalBlockedCountEl = document.getElementById('totalBlockedCount');
   const resetStatsBtn = document.getElementById('resetStatsBtn');
   const currentDomainEl = document.getElementById('currentDomain');
   const whitelistBtn = document.getElementById('whitelistBtn');
@@ -39,11 +40,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   function refreshStatus() {
-    chrome.runtime.sendMessage({ action: 'GET_STATUS' }, (response) => {
+    chrome.runtime.sendMessage({
+      action: 'GET_STATUS',
+      tabId: activeTab?.id
+    }, (response) => {
       if (!response || !response.success) return;
 
       globalToggle.checked = response.enabled;
-      blockedCountEl.textContent = (response.blockedCount || 0).toLocaleString();
+      pageBlockedCountEl.textContent = (response.tabBlockedCount || 0).toLocaleString();
+      totalBlockedCountEl.textContent = (response.totalBlockedCount || 0).toLocaleString();
 
       // Category states
       const cats = response.categories || {};

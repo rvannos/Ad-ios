@@ -11,6 +11,27 @@
 
   const currentHost = window.location.hostname.toLowerCase();
 
+  let pendingBlocks = 0;
+  let flushTimer = null;
+
+  function reportBlocked(count = 1) {
+    pendingBlocks += count;
+    if (!flushTimer) {
+      flushTimer = setTimeout(() => {
+        flushTimer = null;
+        if (pendingBlocks > 0) {
+          const toSend = pendingBlocks;
+          pendingBlocks = 0;
+          try {
+            chrome.runtime.sendMessage({ action: 'INCREMENT_BLOCKED_COUNT', count: toSend });
+          } catch (e) {
+            // Context may be invalidated
+          }
+        }
+      }, 350);
+    }
+  }
+
   chrome.storage.local.get(['adios_global_enabled', 'adios_whitelisted_domains', 'adios_categories'], (result) => {
     if (result.adios_global_enabled === false) return;
 
@@ -73,6 +94,7 @@
           u.includes('bazinga')
         ) {
           console.warn('[Ad-ios] Prevented background popunder to:', url);
+          reportBlocked(1);
           return null;
         }
       }
@@ -130,6 +152,7 @@
       if (!el || el.dataset?.adiosHidden === 'true') return;
       try {
         el.dataset.adiosHidden = 'true';
+        reportBlocked(1);
         el.style.setProperty('display', 'none', 'important');
         el.style.setProperty('visibility', 'hidden', 'important');
         el.style.setProperty('height', '0px', 'important');

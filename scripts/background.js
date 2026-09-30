@@ -43,6 +43,7 @@ chrome.runtime.onInstalled.addListener(async (details) => {
     await chrome.storage.local.set(toInit);
   }
 
+  await setupActionOptions();
   await syncRulesetsAndDynamicRules();
   await updateBadge();
 });
@@ -168,7 +169,22 @@ async function syncRulesetsAndDynamicRules() {
   }
 }
 
-// Update Action badge (only indicate OFF if paused; no numbers on the toolbar icon)
+// Configure DeclarativeNetRequest action options to automatically display blocked count
+async function setupActionOptions() {
+  try {
+    await chrome.declarativeNetRequest.setExtensionActionOptions({
+      displayActionCountAsBadgeText: true
+    });
+    chrome.action.setBadgeBackgroundColor({ color: '#007AFF' });
+  } catch (err) {
+    console.warn('[Ad-ios] setExtensionActionOptions notice:', err);
+  }
+}
+
+// Ensure options are initialized on background script wake-up
+setupActionOptions();
+
+// Update Action badge state
 async function updateBadge() {
   const { [STORAGE_KEYS.GLOBAL_ENABLED]: isEnabled } =
     await chrome.storage.local.get(STORAGE_KEYS.GLOBAL_ENABLED);
@@ -176,13 +192,59 @@ async function updateBadge() {
   if (isEnabled === false) {
     chrome.action.setBadgeText({ text: 'OFF' });
     chrome.action.setBadgeBackgroundColor({ color: '#8E8E93' });
+    try {
+      await chrome.declarativeNetRequest.setExtensionActionOptions({
+        displayActionCountAsBadgeText: false
+      });
+    } catch (e) {}
   } else {
-    // Keep toolbar icon clean; block count only shows inside the popup when clicked
+    // Clear manual badge override so Chrome's native action count displays on the badge
     chrome.action.setBadgeText({ text: '' });
+    chrome.action.setBadgeBackgroundColor({ color: '#007AFF' });
+    try {
+      await chrome.declarativeNetRequest.setExtensionActionOptions({
+        displayActionCountAsBadgeText: true
+      });
+    } catch (e) {}
   }
 }
 
-// Track blocked requests in storage (viewable in popup when clicked)
+// In-memory tab block counts to track deltas into lifetime total
+const tabCounts = new Map();
+
+async function getTabBlockedCount(tabId) {
+  if (!tabId || tabId < 0) return 0;
+  try {
+    const text = await chrome.action.getBadgeText({ tabId });
+    const count = parseInt(text, 10);
+    if (!isNaN(count) && count >= 0) {
+      const prev = tabCounts.get(tabId) || 0;
+      if (count > prev) {
+        const delta = count - prev;
+        tabCounts.set(tabId, count);
+        const data = await chrome.storage.local.get(STORAGE_KEYS.BLOCKED_COUNT);
+        const total = (data[STORAGE_KEYS.BLOCKED_COUNT] || 0) + delta;
+        await chrome.storage.local.set({ [STORAGE_KEYS.BLOCKED_COUNT]: total });
+      }
+      return count;
+    }
+  } catch (e) {
+    // Inaccessible tab
+  }
+  return tabCounts.get(tabId) || 0;
+}
+
+chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
+  if (changeInfo.status === 'complete') {
+    getTabBlockedCount(tabId);
+  }
+});
+
+chrome.tabs.onRemoved.addListener((tabId) => {
+  tabCounts.delete(tabId);
+});
+
+// Development / unpacked listener (fallback when running unpacked)
 if (chrome.declarativeNetRequest.onRuleMatchedDebug) {
   chrome.declarativeNetRequest.onRuleMatchedDebug.addListener(async () => {
     try {
@@ -201,6 +263,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     try {
       switch (message.action) {
         case 'GET_STATUS': {
+          let tabCount = 0;
+          if (message.tabId) {
+            tabCount = await getTabBlockedCount(message.tabId);
+          }
           const data = await chrome.storage.local.get([
             STORAGE_KEYS.GLOBAL_ENABLED,
             STORAGE_KEYS.BLOCKED_COUNT,
@@ -211,6 +277,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           sendResponse({
             success: true,
             enabled: data[STORAGE_KEYS.GLOBAL_ENABLED] !== false,
+            tabBlockedCount: tabCount,
+            totalBlockedCount: data[STORAGE_KEYS.BLOCKED_COUNT] || 0,
             blockedCount: data[STORAGE_KEYS.BLOCKED_COUNT] || 0,
             customRules: data[STORAGE_KEYS.CUSTOM_RULES] || [],
             whitelistedDomains: data[STORAGE_KEYS.WHITELISTED_DOMAINS] || [],
@@ -284,8 +352,31 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           break;
         }
 
+        case 'INCREMENT_BLOCKED_COUNT': {
+          const count = typeof message.count === 'number' && message.count > 0 ? message.count : 1;
+          const tabId = sender?.tab?.id;
+          if (tabId && tabId > 0) {
+            try {
+              await chrome.declarativeNetRequest.setExtensionActionOptions({
+                tabUpdate: {
+                  tabId: tabId,
+                  increment: count
+                }
+              });
+              const current = (tabCounts.get(tabId) || 0) + count;
+              tabCounts.set(tabId, current);
+            } catch (e) {}
+          }
+          const data = await chrome.storage.local.get(STORAGE_KEYS.BLOCKED_COUNT);
+          const nextTotal = (data[STORAGE_KEYS.BLOCKED_COUNT] || 0) + count;
+          await chrome.storage.local.set({ [STORAGE_KEYS.BLOCKED_COUNT]: nextTotal });
+          sendResponse({ success: true, total: nextTotal });
+          break;
+        }
+
         case 'RESET_STATS': {
           await chrome.storage.local.set({ [STORAGE_KEYS.BLOCKED_COUNT]: 0 });
+          tabCounts.clear();
           await updateBadge();
           sendResponse({ success: true });
           break;
